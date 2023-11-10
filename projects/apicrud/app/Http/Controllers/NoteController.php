@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Note;
+use App\Http\Requests\NoteRequest;
 
 class NoteController extends Controller
 {
@@ -11,15 +13,23 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        // Get all notes
+        $notes = Note::all();
+        // Rest API
+        // Return json response (data, status code, headers [Optional])
+        return response()->json($notes, 200);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(NoteRequest $request)
     {
-        //
+        // Create element with values from request
+        Note::create($request->all());
+        return response()->json([
+            'succeed' => true
+        ], 201);
     }
 
     /**
